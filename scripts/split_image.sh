@@ -22,7 +22,7 @@ prefix="${3:-$(basename "${input%.*}")_part}"
 command -v ffmpeg >/dev/null 2>&1 || { echo "ffmpeg is required." >&2; exit 1; }
 command -v ffprobe >/dev/null 2>&1 || { echo "ffprobe is required." >&2; exit 1; }
 
-read -r width height < <(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "$input")
+IFS=x read -r width height < <(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "$input")
 if [[ -z "$width" || -z "$height" ]]; then
   echo "Unable to read image dimensions from '$input'." >&2
   exit 1
